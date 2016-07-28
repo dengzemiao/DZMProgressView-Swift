@@ -15,16 +15,16 @@ DZMProgressAppearance 可使用单利全局控制
 也可按 2 不创建 默认自带
 */
 
-// 1
-let progressAppearance1 = DZMProgressAppearance()
-progressAppearance1.type = .Annular
-progressAppearance1.progressTintColor = UIColor.redColor()
+// 1 \n
+let progressAppearance1 = DZMProgressAppearance() \n
+progressAppearance1.type = .Annular \n
+progressAppearance1.progressTintColor = UIColor.redColor() \n
 
-let progressView1:DZMProgressView = DZMProgressView()
-progressView1.frame = CGRectMake(100, 80, 100, 100)
-progressView1.progress = 0.5
-progressView1.progressAppearance = progressAppearance1
-view.addSubview(progressView1)
+let progressView1:DZMProgressView = DZMProgressView() \n
+progressView1.frame = CGRectMake(100, 80, 100, 100) \n
+progressView1.progress = 0.5 \n
+progressView1.progressAppearance = progressAppearance1 \n
+view.addSubview(progressView1) \n
 
 // 2
 let progressView2:DZMProgressView = DZMProgressView()
