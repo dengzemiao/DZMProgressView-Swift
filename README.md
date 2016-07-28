@@ -7,6 +7,7 @@ swift 版本 进度条 自带 KVO 监听各个属性变化 -> 字体 颜色 背�
 ![CarouselView in action](icon.png)
 
 /*
+
 DZMProgressView: OC Swift 版都有
 
 自带 KVO 监听各个属性变化 -> 字体 颜色 背景颜色 圆圈颜色 等
@@ -18,10 +19,12 @@ DZMProgressAppearance 可使用单利全局控制
 也可按 1 3 一样单独创建 单个控制 
 
 也可按 2 不创建 默认自带
+
 */
 
 
 // 1
+
 let progressAppearance1 = DZMProgressAppearance()
 
 progressAppearance1.type = .Annular
