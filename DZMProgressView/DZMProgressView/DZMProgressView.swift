@@ -267,7 +267,7 @@ class DZMProgressView: UIView {
         
         let font = appearance.percentageTextFont
         
-        let text = "\(progress * 100)%"
+        let text = "\(String(format: "%.0f",fabsf(progress) * 100))%"
         
         let textSize = (text as NSString).boundingRectWithSize(CGSizeMake(CGFloat.max, CGFloat.max), options: [.UsesLineFragmentOrigin,.UsesFontLeading], attributes: [NSFontAttributeName:font], context: nil).size
         
