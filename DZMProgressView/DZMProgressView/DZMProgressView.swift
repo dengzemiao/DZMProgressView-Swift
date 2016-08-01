@@ -79,10 +79,20 @@ class DZMProgressAppearance: NSObject {
 class DZMProgressView: UIView {
 
     /// 进度
-    var progress:Float = 0
+    var progress:Float = 0 {
+        didSet{
+            
+            setNeedsDisplay()
+        }
+    }
     
     /// 配置
-    var progressAppearance:DZMProgressAppearance = DZMProgressAppearance.progressAppearance
+    var progressAppearance:DZMProgressAppearance = DZMProgressAppearance.progressAppearance {
+        didSet{
+            
+            setNeedsDisplay()
+        }
+    }
     
     // 初始化
     convenience init(){
@@ -93,12 +103,12 @@ class DZMProgressView: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor.clearColor()
         opaque = false
-        registerForKVO()
+//        registerForKVO()
     }
     
     deinit {
         
-        unregisterFromKVO()
+//        unregisterFromKVO()
     }
     
     required init?(coder aDecoder: NSCoder) {
