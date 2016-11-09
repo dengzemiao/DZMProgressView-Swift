@@ -14,9 +14,9 @@
  - Pie:     Pie description
  */
 enum SMProgressType:Int {
-    case Annular
-    case Circle
-    case Pie
+    case annular
+    case circle
+    case pie
 }
 
 import UIKit
@@ -25,7 +25,7 @@ import UIKit
 class DZMProgressAppearance: NSObject {
     
     // 样式
-    var type:SMProgressType! = .Circle
+    var type:SMProgressType! = .circle
     
     // 是否显示 百分比文字   只对 DZMProgressTypeAnnular 和 DZMProgressTypeCircle 会有效
     var showPercentage:Bool = true
@@ -47,24 +47,24 @@ class DZMProgressAppearance: NSObject {
     }
     
     // 进度文字字体
-    var percentageTextFont:UIFont = UIFont.systemFontOfSize(10)
+    var percentageTextFont:UIFont = UIFont.systemFont(ofSize: 10)
     
     // 进度文字偏移
-    var percentageTextOffset:CGPoint = CGPointZero
+    var percentageTextOffset:CGPoint = CGPoint.zero
     
     //  初始化
     override init() {
         super.init()
-        schemeColor = UIColor.whiteColor()
+        schemeColor = UIColor.white
         setupColor()
     }
     
     // 设置颜色
     func setupColor() {
         
-        progressTintColor = UIColor(CGColor:CGColorCreateCopyWithAlpha(schemeColor.CGColor, 1)!)
-        backgroundTintColor = UIColor(CGColor:CGColorCreateCopyWithAlpha(schemeColor.CGColor, 0.1)!)
-        percentageTextColor = UIColor(CGColor:CGColorCreateCopyWithAlpha(schemeColor.CGColor, 1)!)
+        progressTintColor = UIColor(cgColor:schemeColor.cgColor.copy(alpha: 1)!)
+        backgroundTintColor = UIColor(cgColor:schemeColor.cgColor.copy(alpha: 0.1)!)
+        percentageTextColor = UIColor(cgColor:schemeColor.cgColor.copy(alpha: 1)!)
     }
     
     // 获取单利对象
@@ -96,13 +96,13 @@ class DZMProgressView: UIView {
     
     // 初始化
     convenience init(){
-        self.init(frame: CGRectMake(0, 0, 40, 40))
+        self.init(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.clearColor()
-        opaque = false
+        backgroundColor = UIColor.clear
+        isOpaque = false
 //        registerForKVO()
     }
     
@@ -121,7 +121,7 @@ class DZMProgressView: UIView {
         
         for keyPath in observableKeypaths() {
             
-            addObserver(self, forKeyPath: keyPath, options: NSKeyValueObservingOptions.New, context: nil)
+            addObserver(self, forKeyPath: keyPath, options: NSKeyValueObservingOptions.new, context: nil)
         }
     }
     
@@ -138,14 +138,14 @@ class DZMProgressView: UIView {
         return ["progressAppearance","progress"]
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         setNeedsDisplay()
     }
     
     // MARK: -- Drawing
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         
         let allRect:CGRect = bounds
         
@@ -153,7 +153,7 @@ class DZMProgressView: UIView {
         
         let appearance:DZMProgressAppearance = progressAppearance
         
-        if appearance.type == .Annular {
+        if appearance.type == .annular {
            
             // 1
             let lineWidth:CGFloat = 1
@@ -162,9 +162,9 @@ class DZMProgressView: UIView {
             
             processBackgroundPath.lineWidth = lineWidth
             
-            processBackgroundPath.lineCapStyle = .Round
+            processBackgroundPath.lineCapStyle = .round
             
-            let center:CGPoint = CGPointMake(bounds.size.width/2, bounds.size.height/2)
+            let center:CGPoint = CGPoint(x: bounds.size.width/2, y: bounds.size.height/2)
             
             let radius:CGFloat = (bounds.size.width - lineWidth)/2
             
@@ -172,7 +172,7 @@ class DZMProgressView: UIView {
             
             var endAngle = (2 * CGFloat(M_PI) + startAngle)
             
-            processBackgroundPath.addArcWithCenter(center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+            processBackgroundPath.addArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
            
             appearance.backgroundTintColor.set()
            
@@ -181,13 +181,13 @@ class DZMProgressView: UIView {
             // 2
             let processPath:UIBezierPath = UIBezierPath()
             
-            processPath.lineCapStyle = .Round
+            processPath.lineCapStyle = .round
             
             processPath.lineWidth = lineWidth
             
             endAngle = (CGFloat(progress) * 2 * CGFloat(M_PI)) + startAngle
             
-            processPath.addArcWithCenter(center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+            processPath.addArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
             
             appearance.progressTintColor.set()
             
@@ -199,16 +199,16 @@ class DZMProgressView: UIView {
                 drawTextInContext(context)
             }
             
-        }else if appearance.type == .Circle {
+        }else if appearance.type == .circle {
             
             // 1
-            let colorBackAlpha:CGColorRef = CGColorCreateCopyWithAlpha(appearance.backgroundTintColor.CGColor, 0.05)!
+            let colorBackAlpha:CGColor = appearance.backgroundTintColor.cgColor.copy(alpha: 0.05)!
             
-            let colorProgressAlpha:CGColorRef = CGColorCreateCopyWithAlpha(appearance.progressTintColor.CGColor, 0.2)!
+            let colorProgressAlpha:CGColor = appearance.progressTintColor.cgColor.copy(alpha: 0.2)!
             
             let allRect = rect
             
-            let circleRect = CGRectMake(allRect.origin.x + 2, allRect.origin.y + 2, allRect.size.width - 4, allRect.size.height - 4)
+            let circleRect = CGRect(x: allRect.origin.x + 2, y: allRect.origin.y + 2, width: allRect.size.width - 4, height: allRect.size.height - 4)
             
             let x:CGFloat = allRect.origin.x + (allRect.size.width / 2)
             
@@ -217,24 +217,24 @@ class DZMProgressView: UIView {
             let angle = CGFloat(progress * 360.0)
             
             // 2
-            CGContextSaveGState(context)
-            CGContextSetStrokeColorWithColor(context, colorProgressAlpha)
-            CGContextSetFillColorWithColor(context, colorBackAlpha)
-            CGContextSetLineWidth(context, 2.0)
-            CGContextFillEllipseInRect(context, circleRect)
-            CGContextStrokeEllipseInRect(context, circleRect)
+            context.saveGState()
+            context.setStrokeColor(colorProgressAlpha)
+            context.setFillColor(colorBackAlpha)
+            context.setLineWidth(2.0)
+            context.fillEllipse(in: circleRect)
+            context.strokeEllipse(in: circleRect)
             
-            CGContextSetRGBFillColor(context, 1.0, 0.0, 1.0, 1.0)
-            CGContextMoveToPoint(context, x, y)
-            CGContextAddArc(context, x, y, (allRect.size.width + 4) / 2, -CGFloat(M_PI) / 2, (angle * CGFloat(M_PI)) / 180.0 - CGFloat(M_PI) / 2, 0)
-            CGContextClip(context)
+            context.setFillColor(red: 1.0, green: 0.0, blue: 1.0, alpha: 1.0)
+            context.move(to: CGPoint(x: x, y: y))
+            context.addArc(center: CGPoint(x:x,y:y), radius: (allRect.size.width + 4) / 2, startAngle: -CGFloat(M_PI) / 2, endAngle: (angle * CGFloat(M_PI)) / 180.0 - CGFloat(M_PI) / 2, clockwise: false)
+            context.clip()
             
-            CGContextSetStrokeColorWithColor(context, appearance.progressTintColor.CGColor)
-            CGContextSetFillColorWithColor(context, appearance.backgroundTintColor.CGColor)
-            CGContextSetLineWidth(context, 2.0)
-            CGContextFillEllipseInRect(context, circleRect)
-            CGContextStrokeEllipseInRect(context, circleRect)
-            CGContextRestoreGState(context)
+            context.setStrokeColor(appearance.progressTintColor.cgColor)
+            context.setFillColor(appearance.backgroundTintColor.cgColor)
+            context.setLineWidth(2.0)
+            context.fillEllipse(in: circleRect)
+            context.strokeEllipse(in: circleRect)
+            context.restoreGState()
             
             // 3
             if appearance.showPercentage {
@@ -244,32 +244,32 @@ class DZMProgressView: UIView {
             
         }else{
             
-            let circleRect = CGRectInset(allRect, 2.0, 2.0)
-            let colorBackAlpha:CGColorRef = CGColorCreateCopyWithAlpha(appearance.backgroundTintColor.CGColor, 0.1)!
+            let circleRect = allRect.insetBy(dx: 2.0, dy: 2.0)
+            let colorBackAlpha:CGColor = appearance.backgroundTintColor.cgColor.copy(alpha: 0.1)!
             
             appearance.progressTintColor.setStroke()
-            CGContextSetFillColorWithColor(context, colorBackAlpha)
+            context.setFillColor(colorBackAlpha)
         
-            CGContextSetLineWidth(context, 2.0)
-            CGContextFillEllipseInRect(context, circleRect)
-            CGContextStrokeEllipseInRect(context, circleRect)
+            context.setLineWidth(2.0)
+            context.fillEllipse(in: circleRect)
+            context.strokeEllipse(in: circleRect)
             
-            let center = CGPointMake(allRect.size.width / 2, allRect.size.height / 2)
+            let center = CGPoint(x: allRect.size.width / 2, y: allRect.size.height / 2)
             let radius = (allRect.size.width - 4) / 2 - 3
             let startAngle = -(CGFloat(M_PI) / 2)
             let endAngle = (CGFloat(progress) * 2 * CGFloat(M_PI)) + startAngle
             appearance.progressTintColor.setFill()
-            CGContextMoveToPoint(context, center.x, center.y);
-            CGContextAddArc(context, center.x, center.y, radius, startAngle, endAngle, 0);
-            CGContextClosePath(context);
-            CGContextFillPath(context);
+            context.move(to: CGPoint(x: center.x, y: center.y));
+            context.addArc(center: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
+            context.closePath();
+            context.fillPath();
         }
         
     }
     
     // 画进度
     
-    func drawTextInContext(context:CGContextRef) {
+    func drawTextInContext(_ context:CGContext) {
         
         let appearance:DZMProgressAppearance = progressAppearance
         
@@ -279,11 +279,11 @@ class DZMProgressView: UIView {
         
         let text = "\(String(format: "%.0f",fabsf(progress) * 100))%"
         
-        let textSize = (text as NSString).boundingRectWithSize(CGSizeMake(CGFloat.max, CGFloat.max), options: [.UsesLineFragmentOrigin,.UsesFontLeading], attributes: [NSFontAttributeName:font], context: nil).size
+        let textSize = (text as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude), options: [.usesLineFragmentOrigin,.usesFontLeading], attributes: [NSFontAttributeName:font], context: nil).size
         
         let x:CGFloat = CGFloat(floorf(Float(allRect.size.width) / 2)) + 3 + appearance.percentageTextOffset.x
         let y:CGFloat = CGFloat(floorf(Float(allRect.size.width) / 2)) - 6 + appearance.percentageTextOffset.y
         
-        (text as NSString).drawAtPoint(CGPointMake(x - textSize.width / 2, y), withAttributes: [NSFontAttributeName:font,NSForegroundColorAttributeName:appearance.percentageTextColor])
+        (text as NSString).draw(at: CGPoint(x: x - textSize.width / 2, y: y), withAttributes: [NSFontAttributeName:font,NSForegroundColorAttributeName:appearance.percentageTextColor])
     }
 }

@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.black
         
         /*
          DZMProgressView: OC Swift 版都有
@@ -28,27 +28,27 @@ class ViewController: UIViewController {
         
         // 1
         let progressAppearance1 = DZMProgressAppearance()
-        progressAppearance1.type = .Annular
-        progressAppearance1.progressTintColor = UIColor.redColor()
+        progressAppearance1.type = .annular
+        progressAppearance1.progressTintColor = UIColor.red
         
         let progressView1:DZMProgressView = DZMProgressView()
-        progressView1.frame = CGRectMake(100, 80, 100, 100)
+        progressView1.frame = CGRect(x: 100, y: 80, width: 100, height: 100)
         progressView1.progress = 0.5
         progressView1.progressAppearance = progressAppearance1
         view.addSubview(progressView1)
         
         // 2
         let progressView2:DZMProgressView = DZMProgressView()
-        progressView2.frame = CGRectMake(100, 240, 100, 100)
+        progressView2.frame = CGRect(x: 100, y: 240, width: 100, height: 100)
         progressView2.progress = 0.7
         view.addSubview(progressView2)
         
         // 3
         let progressAppearance3 = DZMProgressAppearance()
-        progressAppearance3.type = .Pie
+        progressAppearance3.type = .pie
         
         let progressView3:DZMProgressView = DZMProgressView()
-        progressView3.frame = CGRectMake(100, 400, 100, 100)
+        progressView3.frame = CGRect(x: 100, y: 400, width: 100, height: 100)
         progressView3.progress = 0.4
         progressView3.progressAppearance = progressAppearance3
         view.addSubview(progressView3)

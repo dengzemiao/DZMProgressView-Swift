@@ -1,5 +1,7 @@
 # DZMProgressView-Swift
 
+已更新Swift3.0 Xcode版本: Xcode8.1
+
 swift 版本 进度条 自带 KVO 监听各个属性变化 -> 字体 颜色 背景颜色 圆圈颜色 等
 
 下面有使用方式
